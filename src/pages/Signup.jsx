@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,7 +14,7 @@ e.preventDefault();
 
 try {
   const response = await fetch(
-    "http://localhost:5000/api/auth/register",
+    `${API_URL}/api/auth/register`,
     {
       method: "POST",
       headers: {

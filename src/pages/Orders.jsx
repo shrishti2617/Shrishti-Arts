@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 
 function Orders() {
@@ -12,7 +13,7 @@ function Orders() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/orders/${user.id}`
+        `${API_URL}/api/orders/${user.id}`
       );
 
       const data = await response.json();

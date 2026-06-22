@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 
 function Wishlist() {
@@ -14,7 +15,7 @@ if (!user) return;
 
 try {
   const response = await fetch(
-    `http://localhost:5000/api/wishlist/${user.id}`
+    `${API_URL}/api/wishlist/${user.id}`
   );
 
   const data = await response.json();
@@ -37,7 +38,7 @@ useEffect(() => {
 const removeFromWishlist = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/wishlist/remove/${id}`,
+      `${API_URL}/api/wishlist/remove/${id}`,
       {
         method: "DELETE",
       }

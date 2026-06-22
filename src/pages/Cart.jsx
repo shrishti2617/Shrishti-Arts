@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 
 function Cart({setCartCount}) {
@@ -12,7 +13,7 @@ function Cart({setCartCount}) {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/${user.id}`
+        `${API_URL}/api/cart/${user.id}`
       );
 
       const data = await response.json();
@@ -35,7 +36,7 @@ function Cart({setCartCount}) {
   const removeFromCart = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/cart/remove/${id}`,
+      `${API_URL}/api/cart/remove/${id}`,
       {
         method: "DELETE",
       }
@@ -69,7 +70,7 @@ function Cart({setCartCount}) {
 const increaseQuantity = async (id) => {
   try {
     await fetch(
-      `http://localhost:5000/api/cart/increase/${id}`,
+      `${API_URL}/api/cart/increase/${id}`,
       {
         method: "PUT",
       }
@@ -84,7 +85,7 @@ const increaseQuantity = async (id) => {
 const decreaseQuantity = async (id) => {
   try {
     await fetch(
-      `http://localhost:5000/api/cart/decrease/${id}`,
+      `${API_URL}/api/cart/decrease/${id}`,
       {
         method: "PUT",
       }
@@ -107,7 +108,7 @@ const checkout = async () => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/orders/create",
+      `${API_URL}/api/orders/create`,
       {
         method: "POST",
         headers: {
@@ -130,7 +131,7 @@ const checkout = async () => {
       return;
     }
     await fetch(
-  `http://localhost:5000/api/cart/clear/${user.id}`,
+  `${API_URL}/api/cart/clear/${user.id}`,
   {
     method: "DELETE",
   }
@@ -146,7 +147,7 @@ setCartItems([]);
     alert("Server Error");
   }
   const paymentResponse = await fetch(
-  "http://localhost:5000/api/payment/create-order",
+  `${API_URL}/api/payment/create-order`,
   {
     method: "POST",
     headers: {
@@ -183,7 +184,7 @@ const order =
     );
 
     await fetch(
-      "http://localhost:5000/api/orders/create",
+      `${API_URL}/api/orders/create`,
       {
         method: "POST",
         headers: {
@@ -199,7 +200,7 @@ const order =
     );
 
     await fetch(
-      `http://localhost:5000/api/cart/clear/${user.id}`,
+      `${API_URL}/api/cart/clear/${user.id}`,
       {
         method: "DELETE",
       }

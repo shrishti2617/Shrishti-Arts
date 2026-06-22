@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState } from "react";
 
 function AddArtwork() {
@@ -21,7 +22,7 @@ function AddArtwork() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/artworks/add",
+        `${API_URL}/api/artworks/add`,
         {
           method: "POST",
 

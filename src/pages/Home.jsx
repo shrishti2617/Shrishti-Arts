@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -18,7 +19,7 @@ async () => {
 try {
 const response =
 await fetch(
-"http://localhost:5000/api/artworks"
+  `${API_URL}/api/artworks`
 );
 
       const data =
@@ -310,6 +311,7 @@ return (
     </div>
   </section>
 </>
+
 
 );
 }

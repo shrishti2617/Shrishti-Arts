@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import ArtworkCard from "../components/ArtworkCard";
@@ -20,7 +21,7 @@ useEffect(() => {
   const fetchArtworks = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/artworks"
+        `${API_URL}/api/artworks`
       );
 
       const data = await response.json();

@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 
 function ManageOrders() {
@@ -8,7 +9,7 @@ function ManageOrders() {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/orders"
+        `${API_URL}/api/orders`
       );
 
       const data = await response.json();
@@ -30,7 +31,7 @@ function ManageOrders() {
     ) => {
       try {
         await fetch(
-          `http://localhost:5000/api/orders/status/${orderId}`,
+          `${API_URL}/api/orders/status/${orderId}`,
           {
             method: "PUT",
 
@@ -47,7 +48,7 @@ function ManageOrders() {
         );
 
         const response = await fetch(
-  "http://localhost:5000/api/orders"
+  `${API_URL}/api/orders`
 );
 
 const data = await response.json();

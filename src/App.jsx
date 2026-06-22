@@ -1,3 +1,4 @@
+import { API_URL } from "./config";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 
@@ -37,7 +38,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/cart/${user.id}`
+        `${API_URL}/api/cart/${user.id}`
       );
 
       const data = await response.json();
@@ -72,7 +73,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/wishlist/${user.id}`
+        `${API_URL}/api/wishlist/${user.id}`,
       );
 
       const data = await response.json();
@@ -97,7 +98,7 @@ function App() {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/cart/add",
+      `${API_URL}/api/cart/add`,
       {
         method: "POST",
         headers: {
@@ -141,7 +142,7 @@ return;
 
 try {
 const response = await fetch(
-"http://localhost:5000/api/wishlist/add",
+`${API_URL}/api/wishlist/add`,
 {
 method: "POST",
 headers: {

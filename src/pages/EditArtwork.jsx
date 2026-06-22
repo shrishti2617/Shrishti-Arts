@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -28,7 +29,7 @@ function EditArtwork() {
       async () => {
         const response =
           await fetch(
-            "http://localhost:5000/api/artworks"
+            `${API_URL}/api/artworks`
           );
 
         const artworks =
@@ -71,7 +72,7 @@ function EditArtwork() {
       e.preventDefault();
 
       await fetch(
-        `http://localhost:5000/api/artworks/update/${id}`,
+        `${API_URL}/api/artworks/update/${id}`,
         {
           method: "PUT",
 

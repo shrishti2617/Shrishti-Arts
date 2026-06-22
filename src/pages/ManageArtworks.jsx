@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -12,7 +13,7 @@ useEffect(() => {
 
       const response =
         await fetch(
-          "http://localhost:5000/api/artworks"
+          `${API_URL}:5000/api/artworks`
         );
 
       const data =
@@ -33,7 +34,7 @@ const deleteArtwork =
 async (id) => {
 try {
 await fetch(
-`http://localhost:5000/api/artworks/delete/${id}`,
+`${API_URL}/api/artworks/delete/${id}`,
 {
 method: "DELETE",
 }
@@ -61,7 +62,7 @@ async (id) => {
 try {
 
 await fetch(
-`http://localhost:5000/api/artworks/featured/${id}`,
+`${API_URL}/api/artworks/featured/${id}`,
 {
 method: "PUT",
 }
