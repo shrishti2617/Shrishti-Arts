@@ -1,101 +1,207 @@
+import { API_URL } from "../config";
 import { useState } from "react";
 
 function Contact() {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: "",
-    address: "",
-    phone: "",
     email: "",
-    artwork: "",
-    message: "",
+    phone: "",
+    artworkType: "",
+    budget: "",
+    deadline: "",
+    description: "",
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setForm({
+      ...form,
       [e.target.name]: e.target.value,
     });
   };
+const submitRequest = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    alert("Order request submitted successfully!");
+  if (!user) {
+    alert("Please login first.");
+    return;
+  }
 
-    setFormData({
+  if (
+    !form.name ||
+    !form.email ||
+    !form.phone ||
+    !form.artworkType ||
+    !form.budget ||
+    !form.deadline ||
+    !form.description
+  ) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `${API_URL}/api/requests`,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          ...form,
+
+          userId: user.id,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("🎉 Custom Artwork Request Submitted Successfully!");
+
+    setForm({
       name: "",
-      address: "",
-      phone: "",
       email: "",
-      artwork: "",
-      message: "",
+      phone: "",
+      artworkType: "",
+      budget: "",
+      deadline: "",
+      description: "",
     });
-  };
+
+  } catch (error) {
+    console.log(error);
+
+    alert("Server Error");
+  }
+};
+ 
 
   return (
     <div className="contact-page">
-      <h1>Place a Custom Order</h1>
 
-      <form onSubmit={handleSubmit} className="contact-form">
+      <h1>Custom Artwork Request</h1>
+
+      <p>
+        Tell us about your dream artwork and
+        we'll bring it to life.
+      </p>
+
+      <form
+        className="request-form"
+        onSubmit={submitRequest}
+      >
 
         <input
           type="text"
           name="name"
           placeholder="Full Name"
-          value={formData.name}
+          value={form.name}
           onChange={handleChange}
-          required
-        />
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Delivery Address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-        />
-
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
         />
 
         <input
           type="email"
           name="email"
-          placeholder="Email Address"
-          value={formData.email}
+          placeholder="Email"
+          value={form.email}
           onChange={handleChange}
-          required
         />
 
         <input
           type="text"
-          name="artwork"
-          placeholder="Artwork/Product Name"
-          value={formData.artwork}
+          name="phone"
+          placeholder="Phone Number"
+          value={form.phone}
           onChange={handleChange}
-          required
         />
 
+        <select
+          name="artworkType"
+          value={form.artworkType}
+          onChange={handleChange}
+        >
+          <option value="">
+            Select Artwork Type
+          </option>
+
+          <option>
+            Painting
+          </option>
+
+          <option>
+            Jar
+          </option>
+
+          <option>
+            Phone Case
+          </option>
+
+          <option>
+            Keychain
+          </option>
+
+          <option>
+            Portrait
+          </option>
+
+          <option>
+            T-Shirt
+          </option>
+
+          <option>
+            Other
+          </option>
+        </select>
+
+        <input
+          type="number"
+          name="budget"
+          placeholder="Budget (₹)"
+          value={form.budget}
+          onChange={handleChange}
+        />
+       
+
+        <input
+  type="text"
+  placeholder="Deadline"
+  onFocus={(e) => {
+    e.target.type = "date";
+  }}
+  onBlur={(e) => {
+    if (!e.target.value) {
+      e.target.type = "text";
+    }
+  }}
+  name="deadline"
+  value={form.deadline}
+  onChange={handleChange}
+/>
+
         <textarea
-          name="message"
           rows="6"
-          placeholder="Describe your custom order requirements..."
-          value={formData.message}
+          name="description"
+          placeholder="Describe your artwork idea..."
+          value={form.description}
           onChange={handleChange}
         />
 
         <button type="submit">
-          Submit Order Request
+          Submit Request
         </button>
 
       </form>
+
     </div>
   );
 }

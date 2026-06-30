@@ -1,59 +1,155 @@
-import { Link } from "react-router-dom";
-function Navbar({ cartCount, wishlistCount, searchTerm,
-  setSearchTerm }) {
+import { NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+function Navbar({ cartCount, wishlistCount }) {
+
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState("");
+
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
+
+  const handleSearch = (e) => {
+
+    if (e.key === "Enter") {
+
+      if (search.trim() === "") return;
+
+      navigate(
+        `/gallery?search=${encodeURIComponent(search)}`
+      );
+
+      setSearch("");
+
+    }
+
+  };
+
   return (
+
     <nav>
+
       <div className="logo">
         <h2>Shrishti Arts</h2>
       </div>
 
       <ul className="nav-links">
-       <li>
-         <Link to="/">Home</Link>
-       </li>
 
-       <li>
-         <Link to="/gallery">Gallery</Link>
-       </li>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          🏠Home
+        </NavLink>
 
-       <li>
-         <Link to="/about">About</Link>
-       </li>
+        <NavLink
+          to="/gallery"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          🎨Gallery
+        </NavLink>
 
-       <li>
-         <Link to="/contact">Contact</Link>
-       </li>
-     </ul>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          📝About Author
+        </NavLink>
+
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          ☎️Contact
+        </NavLink>
+
+      </ul>
 
       <div className="nav-right">
+
         <input
           type="text"
-          placeholder="Search artwork..."
+          placeholder="Search artworks..."
           className="search-bar"
-           value={searchTerm}
-           onChange={(e) => setSearchTerm(e.target.value)}
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+          onKeyDown={handleSearch}
         />
 
-        <Link to="/">Home</Link>
+        <NavLink
+          to="/wishlist"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          ❤️Wishlist ({wishlistCount})
+        </NavLink>
 
-<Link to="/wishlist">
-  ❤️ Wishlist ({wishlistCount})
-</Link>
+        <NavLink
+          to="/cart"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          🛒Cart ({cartCount})
+        </NavLink>
 
-<Link to="/cart">
-  🛒 Cart ({cartCount})
-</Link>
+        <NavLink
+          to="/orders"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          📦My Orders
+        </NavLink>
 
+        {!user?.admin && (
+  <NavLink
+    to="/myrequests"
+    className={({ isActive }) =>
+      isActive ? "nav-active" : "nav-link"
+    }
+  >
+    📋My Requests
+  </NavLink>
+)}
 
-<Link to="/orders">
-  📦 My Orders
-</Link>
+        {user?.admin && (
 
-<Link to="/login">
-  👤 My Account
-</Link>
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              isActive ? "nav-active" : "nav-link"
+            }
+          >
+            🛠️Admin
+          </NavLink>
+
+        )}
+
+        <NavLink
+          to="/login"
+          className={({ isActive }) =>
+            isActive ? "nav-active" : "nav-link"
+          }
+        >
+          👤My Account
+        </NavLink>
+
       </div>
+
     </nav>
+
   );
 }
 

@@ -22,7 +22,9 @@ import AddArtwork from "./pages/AddArtwork";
 import ManageArtworks from "./pages/ManageArtworks";
 import EditArtwork from "./pages/EditArtwork";
 import ManageOrders from "./pages/ManageOrders";
-
+import Checkout from "./pages/Checkout";
+import ManageRequests from "./pages/ManageRequests";
+import MyRequests from "./pages/MyRequests";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [wishlistCount, setWishlistCount] = useState(0);
@@ -254,6 +256,20 @@ alert("Server Error");
                  <ManageOrders />
                }
              />
+             <Route
+               path="/checkout"
+              element={
+                <Checkout />
+               }
+              />
+              <Route
+                path="/admin/requests"
+                element={<ManageRequests />}
+              />
+              <Route
+                path="/myrequests"
+                element={<MyRequests />}
+              />
          
         </Routes>
         <Footer />

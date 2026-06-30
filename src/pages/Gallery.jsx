@@ -1,10 +1,18 @@
-import { API_URL } from "../config";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { API_URL } from "../config";
 import { useSearchParams } from "react-router-dom";
 import ArtworkCard from "../components/ArtworkCard";
 import { Link } from "react-router-dom";
 
+
 function Gallery({ addToCart, addToWishlist }) {
+const [artworks, setArtworks] = useState([]);
+const location = useLocation();
+
+const query = new URLSearchParams(location.search);
+
+const search = query.get("search") || "";
 const [searchParams] = useSearchParams();
 
 const categoryFromURL =
@@ -13,8 +21,7 @@ searchParams.get("category") || "All";
 const [category, setCategory] =
 useState(categoryFromURL);
 
-const [artworks, setArtworks] = useState([]);
-const [search, setSearch] = useState("");
+
 const [sortOrder, setSortOrder] =
   useState("default");
 useEffect(() => {
@@ -50,7 +57,15 @@ artwork.title
 .toLowerCase()
 .includes(
 search.toLowerCase()
+) ||
+
+artwork.category
+.toLowerCase()
+.includes(
+search.toLowerCase()
 );
+
+
 
 return (
 categoryMatch &&
@@ -82,6 +97,7 @@ return 0;
 
 });
 
+
 return ( <div className="gallery-page">
 
   <div className="gallery-hero">
@@ -109,14 +125,7 @@ return ( <div className="gallery-page">
   
   <div className="search-sort-container">
 
-  <input
-    type="text"
-    placeholder="Search artworks..."
-    value={search}
-    onChange={(e) =>
-      setSearch(e.target.value)
-    }
-  />
+
 
   <select
     value={sortOrder}

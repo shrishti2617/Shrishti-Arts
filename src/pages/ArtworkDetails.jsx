@@ -1,101 +1,120 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { API_URL } from "../config";
 
-import spidermanJar from "../assets/spidermanjar.jpeg";
-import starrynightBag from "../assets/starrynightbag.jpeg";
-import zenitsuPhoneCase from "../assets/zenistuphonecase.jpeg";
-import animeposter from "../assets/AnimePoster.jpeg";
-import evileyejar from "../assets/evileyeJar.jpeg";
-import customizekeychain from "../assets/customizeKeychain.jpeg";
+function ArtworkDetails({
+  addToCart,
+  addToWishlist,
+}) {
 
-function ArtworkDetails({addToCart, addToWishlist}) {
-const { id } = useParams();
+  const { id } = useParams();
 
-const artworks = [
-{
-image: spidermanJar,
-title: "Spiderman Jar",
-price: 499,
-description:
-"A handmade Spiderman-themed decorative jar perfect for anime and superhero lovers.",
-},
-{
-image: starrynightBag,
-title: "Starry Night Bag",
-price: 499,
-description:
-"Inspired by Van Gogh's masterpiece, hand-painted on a stylish tote bag.",
-},
-{
-image: zenitsuPhoneCase,
-title: "Zenitsu Phone Case",
-price: 499,
-description:
-"Anime-inspired phone case featuring Zenitsu from Demon Slayer.",
-},
-{
-image: animeposter,
-title: "Anime Poster",
-price: 499,
-description:
-"High-quality anime poster designed for fans and collectors.",
-},
-{
-image: evileyejar,
-title: "Evil Eye Jar",
-price: 499,
-description:
-"Beautiful hand-painted Evil Eye decorative jar for home decor.",
-},
-{
-image: customizekeychain,
-title: "Customize Keychain",
-price: 499,
-description:
-"Personalized keychain made specially according to your design.",
-},
-];
+  const [artwork, setArtwork] =
+    useState(null);
 
-const artwork = artworks[id];
+  useEffect(() => {
 
-return ( <div className="details-page">
+    const fetchArtwork =
+      async () => {
+
+        try {
+
+          const response =
+            await fetch(
+              `${API_URL}/api/artworks`
+            );
+
+          const data =
+            await response.json();
+
+          setArtwork(
+            data[id]
+          );
+
+        } catch (error) {
+
+          console.log(error);
+
+        }
+
+      };
+
+    fetchArtwork();
+
+  }, [id]);
+
+  if (!artwork) {
+
+    return (
+      <h2>
+        Loading Artwork...
+      </h2>
+    );
+
+  }
+
+  return (
+
+    <div className="details-page">
+
       <div className="back-btn-container">
-       <Link to="/gallery" className="back-btn">
-         ← Back to Gallery
-       </Link>
+
+        <Link
+          to="/gallery"
+          className="back-btn"
+        >
+          ← Back to Gallery
+        </Link>
+
       </div>
-  <div className="details-card">
 
-    <img
-      src={artwork.image}
-      alt={artwork.title}
-    />
+      <div className="details-card">
 
-    <div className="details-info">
+        <img
+          src={artwork.image}
+          alt={artwork.title}
+        />
 
-      <h1>{artwork.title}</h1>
+        <div className="details-info">
 
-      <h2>₹{artwork.price}</h2>
+          <h1>
+            {artwork.title}
+          </h1>
 
-      <p>{artwork.description}</p>
+          <h2>
+            ₹{artwork.price}
+          </h2>
 
-      <button
-        onClick={() => addToCart(artwork)}
-      >
-        🛒 Add To Cart
-      </button>
+          <p>
+            {artwork.description}
+          </p>
 
-      <button
-        onClick={() => addToWishlist(artwork)}
-      >
-        ❤️ Add To Wishlist
-      </button>
+          <button
+            onClick={() =>
+              addToCart(artwork)
+            }
+          >
+            🛒 Add To Cart
+          </button>
+
+          <button
+            onClick={() =>
+              addToWishlist(
+                artwork
+              )
+            }
+          >
+            ❤️ Add To Wishlist
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
-  </div>
+  );
 
-</div>
-);
 }
 
 export default ArtworkDetails;

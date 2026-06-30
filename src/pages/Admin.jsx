@@ -54,7 +54,7 @@ Admin Dashboard </h1>
   <hr />
 
   <h2>
-    Dashboard Statistics
+    Dashboard Statistics📊 
   </h2>
 
   <div className="stats-container">
@@ -67,7 +67,7 @@ Admin Dashboard </h1>
     </div>
 
     <div className="stat-card">
-      <h2>Artworks</h2>
+      <h2>Artworks </h2>
       <p>
         {stats.totalArtworks}
       </p>
@@ -90,7 +90,7 @@ Admin Dashboard </h1>
       to="/admin/add-artwork"
     >
       <button>
-        Add Artwork
+        Add Artwork ➕
       </button>
     </Link>
 
@@ -98,7 +98,7 @@ Admin Dashboard </h1>
       to="/admin/manage-artworks"
     >
       <button>
-        Manage Artworks
+        Manage Artworks 🖼️
       </button>
     </Link>
 
@@ -106,9 +106,14 @@ Admin Dashboard </h1>
       to="/admin/orders"
     >
       <button>
-        Manage Orders
+        Manage Orders 📦 
       </button>
     </Link>
+    <Link to="/admin/requests">
+  <button>
+    📩 Custom Requests
+  </button>
+</Link>
 
   </div>
 </div>

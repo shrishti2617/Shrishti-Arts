@@ -11,6 +11,12 @@ const artworkRoutes = require(
 const orderRoutes = require(
   "./routes/orderRoutes"
 );
+const reviewRoutes = require(
+  "./routes/reviewRoutes.js"
+);
+const requestRoutes = require(
+  "./routes/requestRoutes"
+);
 const paymentRoutes =
 require("./routes/paymentRoutes");
 const express = require("express");
@@ -46,6 +52,11 @@ app.use(
   "/api/payment",
   paymentRoutes
 );
+app.use("/api/reviews", reviewRoutes);
+app.use(
+  "/api/requests",
+  requestRoutes
+);
 
 app.get("/", (req,res)=>{
     res.send("API is running");
@@ -54,7 +65,3 @@ app.get("/", (req,res)=>{
 app.listen(process.env.PORT || 5000, () => {
     console.log("Server running");
 });
-app.use(
-  "/api/cart",
-  cartRoutes
-);

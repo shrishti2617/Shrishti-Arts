@@ -13,7 +13,7 @@ useEffect(() => {
 
       const response =
         await fetch(
-          `${API_URL}:5000/api/artworks`
+          `${API_URL}/api/artworks`
         );
 
       const data =
