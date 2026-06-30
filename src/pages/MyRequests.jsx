@@ -98,21 +98,23 @@ function MyRequests() {
               <strong>Status:</strong>
 
               <span
-                className={
-                  request.status === "Pending"
-                    ? "pending"
-                    : "accepted"
-                }
-              >
-
-                {request.status}
-
-              </span>
+  className={
+    request.status === "Pending"
+      ? "pending"
+      : "accepted"
+  }
+>
+  {request.status === "Completed"
+    ? "Accepted"
+    : request.status}
+</span>
 
             </p>
 
            {
-  request.status === "Completed" && (
+   (request.status === "Completed" ||
+   request.status === "Accepted") && (
+
 
     <div className="admin-message">
 
