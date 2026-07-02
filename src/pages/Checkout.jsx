@@ -71,7 +71,7 @@ function Checkout() {
       const order = await paymentResponse.json();
 
       const options = {
-        key: "rzp_test_T3P96DFryWNodJ",
+        key: "rzp_live_T8YHKdZyuK7goD",
 
         amount: order.amount,
 
@@ -83,9 +83,19 @@ function Checkout() {
 
         order_id: order.id,
 
-        handler: async () => {
-          alert("Payment Successful 🎉");
-        },
+       handler: async function (response) {
+
+  console.log("Payment Response:", response);
+
+  alert("Payment Successful 🎉");
+
+  console.log("Payment ID:", response.razorpay_payment_id);
+
+  console.log("Order ID:", response.razorpay_order_id);
+
+  console.log("Signature:", response.razorpay_signature);
+
+},
 
         theme: {
           color: "#3399cc",
